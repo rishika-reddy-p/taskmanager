@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import CreateTask from "./components/CreateTask";
+import TasksContainer from "./components/TasksContainer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// [
+//   {
+//     task: 'Buy milk',
+//     state: 'TO_DO'
+//   },
+//   {
+//     task: 'Exercise',
+//     state: 'DONE'
+//   },
+//   {
+//     task: 'Read AH',
+//     state: 'IN_PROGRESS'
+//   }
+// ]
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <div className="App-header">TASK MANAGER</div>
+        <CreateTask />
+        <div className="AllTasksContainer">
+          <TasksContainer title="TODO" />
+          <TasksContainer title="IN PROGRESS" />
+          <TasksContainer title="DONE" />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
