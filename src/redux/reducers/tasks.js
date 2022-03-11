@@ -8,15 +8,14 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TASK_IN_TODO: {
-      const { id, content } = action.payload;
-      console.log("state", state)
+      const { id, task } = action.payload;
       return {
         ...state,
         allIds: [...state.allIds, id],
         byIds: {
           ...state.byIds,
           [id]: {
-            content,
+            task,
           }
         }
       };

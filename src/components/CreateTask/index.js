@@ -4,6 +4,7 @@ import Button from "../../common/components/Button";
 import TextField from "../../common/components/TextField";
 import { connect } from "react-redux";
 import { addTaskInToDo } from "../../redux/actions";
+import { TASK_STATUS } from "../../common/constants";
 
 class CreateTask extends React.Component {
   constructor(props) {
@@ -20,7 +21,10 @@ class CreateTask extends React.Component {
 
   handleCreateTask(event) {
     if (this.state.task) {
-        this.props.addTaskInToDo(this.state.task);
+        this.props.addTaskInToDo({
+          name: this.state.task,
+          status: TASK_STATUS.TODO
+        });
     this.setState({ task: "" });
     }
     event.preventDefault();

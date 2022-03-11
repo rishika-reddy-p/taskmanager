@@ -9,7 +9,7 @@ class TasksContainer extends React.Component {
         <h3>{this.props.title}</h3>
         {this.props.tasks && this.props.tasks.length
           && this.props.tasks.map((todo, index) => {
-              return <div>{todo.content}</div>;
+              return <div>{todo.task.name}</div>;
             })
           }
       </div>
