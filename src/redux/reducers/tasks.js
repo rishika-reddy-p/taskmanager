@@ -1,23 +1,25 @@
-import { ADD_TASK_IN_TODO } from "../actionTypes";
+import { ADD_TASK_IN_TODO, MOVE_TASK } from "../actionTypes";
 
 const initialState = {
-  allIds: [],
-  byIds: {}
+  byIds: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TASK_IN_TODO: {
-      const { id, task } = action.payload;
       return {
         ...state,
-        allIds: [...state.allIds, id],
-        byIds: {
+        byIds: [
           ...state.byIds,
-          [id]: {
-            task,
-          }
-        }
+          {...action.payload}
+        ]
+      };
+    }
+
+    case MOVE_TASK: {
+      return {
+        ...state,
+        byIds: action.payload.map(obj => ({...obj}))
       };
     }
     

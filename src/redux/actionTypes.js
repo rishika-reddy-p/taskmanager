@@ -1,4 +1,2 @@
 export const ADD_TASK_IN_TODO = "ADD TASK IN TODO";
-export const MOVE_TASK_TO_INPROGRESS = "MOVE TASK TO INPROGRESS";
-export const MOVE_TASK_TO_DONE = "MOVE TASK TO DONE";
-export const MOVE_TASK_TO_TODO = "MOVE TASK TO TODO";
+export const MOVE_TASK = "MOVE TASK";

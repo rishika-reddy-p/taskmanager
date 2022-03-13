@@ -2,34 +2,39 @@ import "./App.css";
 import React from "react";
 import CreateTask from "./components/CreateTask";
 import TasksContainer from "./components/TasksContainer";
-
-// [
-//   {
-//     task: 'Buy milk',
-//     state: 'TO_DO'
-//   },
-//   {
-//     task: 'Exercise',
-//     state: 'DONE'
-//   },
-//   {
-//     task: 'Read AH',
-//     state: 'IN_PROGRESS'
-//   }
-// ]
+import { ThemeContext, themes } from "./ThemeContext";
+import Button from "../src/common/components/Button";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: themes.light,
+    };
+
+    this.toggleTheme = () => {
+      this.setState((state) => ({
+        theme: state.theme === themes.dark ? themes.light : themes.dark,
+      }));
+    };
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">TASK MANAGER</div>
-        <CreateTask />
-        <div className="AllTasksContainer">
-          <TasksContainer title="TODO" />
-          <TasksContainer title="IN PROGRESS" />
-          <TasksContainer title="DONE" />
+      <ThemeContext.Provider value={this.state.theme}>
+        <div className="App">
+          <div className="App-header">
+            TASK MANAGER
+            <Button onClick={this.toggleTheme}>Change theme</Button>
+          </div>
+          <CreateTask />
+          <div className="AllTasksContainer">
+            <TasksContainer title="TODO" />
+            <TasksContainer title="IN PROGRESS" />
+            <TasksContainer title="DONE" />
+          </div>
         </div>
-      </div>
+      </ThemeContext.Provider>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { ADD_TASK_IN_TODO } from "./actionTypes";
+import { ADD_TASK_IN_TODO, MOVE_TASK } from "./actionTypes";
 
 let nextTodoId = 0;
 
@@ -9,3 +9,8 @@ export const addTaskInToDo = task => ({
     task
   }
 });
+
+export const moveTask = payload => ({
+  type: MOVE_TASK,
+  payload: payload
+})

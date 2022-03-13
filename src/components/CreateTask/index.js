@@ -10,7 +10,6 @@ class CreateTask extends React.Component {
   constructor(props) {
     super(props);
     this.state = { task: "" };
-
     this.handleTaskInputChange = this.handleTaskInputChange.bind(this);
     this.handleCreateTask = this.handleCreateTask.bind(this);
   }
