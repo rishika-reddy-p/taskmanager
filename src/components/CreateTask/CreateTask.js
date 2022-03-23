@@ -22,10 +22,7 @@ class CreateTask extends React.Component {
   handleCreateTask(event) {
     event.preventDefault();
     if (this.state.task) {
-      this.props.addTaskInToDo({
-        name: this.state.task,
-        status: TASK_STATUS.TODO,
-      });
+      this.props.addTaskInToDo(this.state.task);
       this.setState(TASK_INITIAL_STATE);
     }
   }
@@ -38,7 +35,7 @@ class CreateTask extends React.Component {
           placeholder="Buy Groceries"
           onChange={this.handleTaskInputChange}
           value={this.state.task}
-        ></TextField>
+        />
         <Button onClick={this.handleCreateTask}>Create Task</Button>
       </div>
     );
