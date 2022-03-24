@@ -1,1 +1,1 @@
-export const TASK_INITIAL_STATE = { task: "" }
+export const TASK_INITIAL_STATE = { task: "", err: "" }

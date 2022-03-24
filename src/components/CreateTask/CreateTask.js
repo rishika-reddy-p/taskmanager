@@ -4,38 +4,47 @@ import Button from "../../common/components/Button";
 import TextField from "../../common/components/TextField";
 import { connect } from "react-redux";
 import { addTaskInToDo } from "../../redux/actions";
-import { TASK_STATUS } from "../../common/constants/task/status";
 import { TASK_INITIAL_STATE } from "../../common/constants/task/state";
+import _ from "lodash";
+import { hasSpecialCharacters } from "../../common/utils/helpers/regex";
+import { SPECIAL_CHARACTERS_NOT_ALLOWED } from "../../common/constants/messages/errorTexts";
 
 class CreateTask extends React.Component {
   constructor(props) {
     super(props);
     this.state = TASK_INITIAL_STATE;
-    this.handleTaskInputChange = this.handleTaskInputChange.bind(this);
-    this.handleCreateTask = this.handleCreateTask.bind(this);
   }
 
-  handleTaskInputChange(event) {
-    this.setState({ task: event.target.value });
-  }
-
-  handleCreateTask(event) {
-    event.preventDefault();
-    if (this.state.task) {
-      this.props.addTaskInToDo(this.state.task);
-      this.setState(TASK_INITIAL_STATE);
+  handleTaskInputChange = (event) => {
+    const tempTask = event.target.value;
+    if (hasSpecialCharacters(tempTask)) {
+      this.setState({ ...this.state, err: SPECIAL_CHARACTERS_NOT_ALLOWED });
+    } else {
+      this.setState({ ...this.state, task: tempTask, err: "" });
     }
-  }
+  };
+
+  handleCreateTask = (event) => {
+    event.preventDefault();
+    const taskNameTrimmed = this.state.task.trim();
+    if (_.isEmpty(taskNameTrimmed)) return;
+    this.props.addTaskInToDo(taskNameTrimmed);
+    this.setState(TASK_INITIAL_STATE);
+  };
 
   render() {
     return (
       <div className="CreateTaskContainer">
-        <TextField
-          className="CreateTaskInputBar"
-          placeholder="Buy Groceries"
-          onChange={this.handleTaskInputChange}
-          value={this.state.task}
-        />
+        <div className="TaskBarContainer">
+          <TextField
+            className="CreateTaskInputBar"
+            placeholder="Buy Groceries"
+            onChange={this.handleTaskInputChange}
+            value={this.state.task}
+            maxLength={50}
+          />
+          {this.state.err}
+        </div>
         <Button onClick={this.handleCreateTask}>Create Task</Button>
       </div>
     );
