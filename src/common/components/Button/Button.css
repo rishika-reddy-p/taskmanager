@@ -1,5 +1,12 @@
 .Button {
-    background-color: aqua;
     border-radius: 4px;
     height: 40px;
+}
+
+.PrimaryButton {
+    background-color: aqua;
+}
+
+.SecondaryButton {
+    background-color: aquamarine;
 }

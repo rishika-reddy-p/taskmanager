@@ -4,6 +4,7 @@ import CreateTask from "./components/CreateTask";
 import TasksContainer from "./components/TasksContainer";
 import { ThemeContext, themes } from "./ThemeContext";
 import Button from "../src/common/components/Button";
+import { BUTTON_VARIANTS } from "./common/components/Button/constants";
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends React.Component {
         <div className="App">
           <div className="App-header">
             TASK MANAGER
-            <Button onClick={this.toggleTheme}>Change theme</Button>
+            <Button onClick={this.toggleTheme} variant={BUTTON_VARIANTS.SECONDARY}>Change theme</Button>
           </div>
           <CreateTask />
           <div className="AllTasksContainer">

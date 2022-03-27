@@ -1,4 +1,16 @@
 .Task {
     margin: 4px;
     border: 1px solid grey;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.DeleteIcon {
+    height: 15px;
+    cursor: 'pointer';
+    padding-left: 10px;
 }

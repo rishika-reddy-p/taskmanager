@@ -1,5 +1,11 @@
-import { ADD_TASK_IN_TODO, MOVE_TASK } from "../actionTypes";
+import {
+  ADD_TASK_IN_TODO,
+  DELETE_TASK,
+  MOVE_TASK,
+  EDIT_TASK,
+} from "../actionTypes";
 import { TASK_STATUS } from "../../common/constants/task/status";
+import uuid from "react-uuid";
 
 const initialState = {
   byIds: [],
@@ -9,7 +15,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case ADD_TASK_IN_TODO: {
-      const newTaskId = state.byIds.length + 1;
+      const newTaskId = uuid();
       return {
         ...state,
         byIds: [
@@ -29,6 +35,36 @@ export default function (state = initialState, action) {
       return {
         ...state,
         byIds: action.payload.map((obj) => ({ ...obj })),
+      };
+    }
+
+    case DELETE_TASK: {
+      const taskIdToDelete = action.payload;
+      const tempTasks = state.byIds.filter((task) => {
+        return task.id !== taskIdToDelete;
+      });
+      return {
+        ...state,
+        byIds: tempTasks,
+      };
+    }
+
+    case EDIT_TASK: {
+      const tempTasks = state.byIds.map((task) => {
+        if (task.id === action.payload.taskId) {
+          return {
+            ...task,
+            task: {
+              ...task.task,
+              name: action.payload.taskName,
+            },
+          };
+        }
+        return task;
+      });
+      return {
+        ...state,
+        byIds: tempTasks,
       };
     }
 
