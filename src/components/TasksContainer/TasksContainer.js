@@ -48,8 +48,8 @@ class TasksContainer extends React.Component {
 TasksContainer.contextType = ThemeContext;
 
 const mapStateToProps = (state) => {
-  const { byIds } = state.tasks || {};
-  return { tasks: byIds };
+  const { allTasks } = state.tasks || {};
+  return { tasks: allTasks };
 };
 
 export default connect(mapStateToProps, {moveTask})(TasksContainer);

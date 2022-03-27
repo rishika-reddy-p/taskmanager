@@ -8,7 +8,7 @@ import { TASK_STATUS } from "../../common/constants/task/status";
 import uuid from "react-uuid";
 
 const initialState = {
-  byIds: [],
+  allTasks: [],
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -18,8 +18,8 @@ export default function (state = initialState, action) {
       const newTaskId = uuid();
       return {
         ...state,
-        byIds: [
-          ...state.byIds,
+        allTasks: [
+          ...state.allTasks,
           {
             id: newTaskId,
             task: {
@@ -34,23 +34,23 @@ export default function (state = initialState, action) {
     case MOVE_TASK: {
       return {
         ...state,
-        byIds: action.payload.map((obj) => ({ ...obj })),
+        allTasks: action.payload.map((obj) => ({ ...obj })),
       };
     }
 
     case DELETE_TASK: {
       const taskIdToDelete = action.payload;
-      const tempTasks = state.byIds.filter((task) => {
+      const tempTasks = state.allTasks.filter((task) => {
         return task.id !== taskIdToDelete;
       });
       return {
         ...state,
-        byIds: tempTasks,
+        allTasks: tempTasks,
       };
     }
 
     case EDIT_TASK: {
-      const tempTasks = state.byIds.map((task) => {
+      const tempTasks = state.allTasks.map((task) => {
         if (task.id === action.payload.taskId) {
           return {
             ...task,
@@ -64,7 +64,7 @@ export default function (state = initialState, action) {
       });
       return {
         ...state,
-        byIds: tempTasks,
+        allTasks: tempTasks,
       };
     }
 
