@@ -1,38 +1,46 @@
-import "./Task.css";
+import "./task.css";
 import React from "react";
 import CancelIcon from "./assets/crossIcon.svg";
 import { connect } from "react-redux";
 import { deleteTask, editTask } from "../../redux/actions";
+import Icon from '../../common/components/Icon';
 class Task extends React.Component {
-  handleDragStart = (e, id) => {
-    e.dataTransfer.setData("id", id);
+  handleDragStart = (e) => {
+    e.dataTransfer.setData("id", this.props.id);
   };
   handleTaskEdit = (e) => {
-    this.props.editTask(this.props.id, e.currentTarget.textContent)
+    // add validations - use validator function
+    this.props.editTask(this.props.id, e.currentTarget.textContent);
   };
+  handleDeleteTask = () => {
+    this.props.deleteTask(this.props.id);
+  }
   render() {
     return (
       <div
         className={"Task"}
-        style={{ backgroundColor: "aqua" }}
         key={this.props.id}
         draggable
-        onDragStart={(e) => {
-          this.handleDragStart(e, this.props.id);
-        }}
+        onDragStart={this.handleDragStart}
       >
-        <div contentEditable onBlur={this.handleTaskEdit} suppressContentEditableWarning>
+        <div
+          contentEditable
+          onBlur={this.handleTaskEdit}
+          suppressContentEditableWarning
+        >
           {" "}
           {this.props.name}
         </div>
-        <img
+        <Icon
           src={CancelIcon}
           alt="delete icon"
-          className={"DeleteIcon"}
-          onClick={() => {
-            this.props.deleteTask(this.props.id);
-          }}
+          onClick={this.handleDeleteTask}
         />
+        {/* <Icon
+          src={EditIcon}
+          alt="edit icon"
+          onClick={this.handleTaskEdit}
+        /> */}
       </div>
     );
   }

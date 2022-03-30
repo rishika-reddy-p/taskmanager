@@ -1,17 +1,20 @@
-import "./TextField.css";
+import "./textField.css";
 import React from "react";
 import { debounce } from "lodash";
+import { DEFAULT_WAIT_TIME_BEFORE_DEBOUNCE } from "./constants/textField.general";
 
 class TextField extends React.Component {
   componentDidMount() {
-    if (this.props.onChange && this.props.wait) {
-      this.debouncedOnChange = debounce(this.props.onChange, this.props.wait);
+    if (this.props.onChange) {
+      const wait = this.props.wait ?? DEFAULT_WAIT_TIME_BEFORE_DEBOUNCE;
+      this.debouncedOnChange = debounce(this.props.onChange, wait);
     }
   }
   handleChange = (e) => {
     if (this.props.onChange) {
-      if (this.props.wait) {
-        this.debouncedOnChange();
+      const shouldDebounce = this.props.isDebounceFeatureFlagOn || this.props.wait;
+      if (shouldDebounce) {
+        this.debouncedOnChange(e);
       } else {
         this.props.onChange(e);
       }

@@ -1,1 +1,0 @@
-export const SPECIAL_CHARACTERS_NOT_ALLOWED = "Special characters are not allowed!";

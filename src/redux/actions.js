@@ -1,13 +1,15 @@
 import {
-  ADD_TASK_IN_TODO,
+  ADD_TASK,
   MOVE_TASK,
   DELETE_TASK,
   EDIT_TASK,
 } from "./actionTypes";
 
-export const addTaskInToDo = (payload) => ({
-  type: ADD_TASK_IN_TODO,
-  payload,
+export const addTask = (id, name, status) => ({
+  type: ADD_TASK,
+  payload: {
+    id, name, status
+  },
 });
 
 export const moveTask = (payload) => ({

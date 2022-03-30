@@ -11,6 +11,7 @@ export const themes = {
   },
 };
 
+// move toggle here
 export const ThemeContext = React.createContext(
   themes.dark
 );

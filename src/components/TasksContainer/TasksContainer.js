@@ -1,4 +1,4 @@
-import "./TasksContainer.css";
+import "./tasksContainer.css";
 import React from "react";
 import { connect } from "react-redux";
 import Task from "../Task";
@@ -12,7 +12,8 @@ class TasksContainer extends React.Component {
   handleDrop(event, status) {
     const droppedTaskId = event.dataTransfer.getData("id");
     let tempTasks = this.props.tasks.map((item) => {
-      if(item.id == droppedTaskId) {
+      if(item.id === droppedTaskId) {
+        // destruc, no inline
         const tempItem = {id: item.id, task: {name: item.task.name, status: status}}
         return tempItem
       } else {
@@ -34,7 +35,9 @@ class TasksContainer extends React.Component {
         onDrop={(e) => {this.handleDrop(e, this.props.title)}}
       >
         <h3>{this.props.title}</h3>
+        {/* move to render function - renderToDos */}
         {this.props.tasks && this.props.tasks.length > 0 &&
+        // move out
           this.props.tasks.map((todo) => {
             return (todo.task.status && todo.task.status === this.props.title) ? (
               <Task name={todo.task.name} id={todo.id} />
