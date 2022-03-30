@@ -9,3 +9,8 @@
     padding-right: 10px;
     background-color: aqua;
 }
+
+.IconContainer {
+    display: flex;
+    align-items: center;
+}
