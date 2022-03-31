@@ -2,8 +2,10 @@ import "./tasksContainer.css";
 import React from "react";
 import { connect } from "react-redux";
 import Task from "../Task";
-import {moveTask} from "../../redux/actions";
-import {ThemeContext} from "../../ThemeContext";
+import { moveTask } from "../../redux/actions";
+import { ThemeContext } from "../../ThemeContext";
+import { getTasksByStatus } from "./helpers/getTasksByStatus";
+import { updateCurrentTaskStatus } from "./helpers/updateCurrentTaskStatus";
 
 class TasksContainer extends React.Component {
   handleDragOver(event) {
@@ -11,38 +13,41 @@ class TasksContainer extends React.Component {
   }
   handleDrop(event, status) {
     const droppedTaskId = event.dataTransfer.getData("id");
-    let tempTasks = this.props.tasks.map((item) => {
-      if(item.id === droppedTaskId) {
-        // destruc, no inline
-        const tempItem = {id: item.id, task: {name: item.task.name, status: status}}
-        return tempItem
-      } else {
-        return item
-      }
-    });
-    this.props.moveTask(tempTasks)
-
+    const tempTasks = this.props.tasks.map(
+      updateCurrentTaskStatus(droppedTaskId, status)
+    );
+    this.props.moveTask(tempTasks);
   }
+
+  renderCurrentTask = (todo) => {
+    return <Task name={todo.task.name} id={todo.id} />;
+  };
+
+  renderTasks = () => {
+    const allTasks = this.props.tasks;
+    const currentContainerStatus = this.props.title;
+    if (allTasks && allTasks.length > 0) {
+      const currentContainerTasks = allTasks.filter(
+        getTasksByStatus(currentContainerStatus)
+      );
+      return currentContainerTasks.map(this.renderCurrentTask);
+    }
+  };
+
   render() {
     let theme = this.context;
+    const handleDrop = (e) => {
+      this.handleDrop(e, this.props.title);
+    };
     return (
       <div
         className="Container"
-        style={{backgroundColor: theme.background}}
-        onDragOver={(e) => {
-          this.handleDragOver(e);
-        }}
-        onDrop={(e) => {this.handleDrop(e, this.props.title)}}
+        style={{ backgroundColor: theme.background }}
+        onDragOver={this.handleDragOver}
+        onDrop={handleDrop}
       >
         <h3>{this.props.title}</h3>
-        {/* move to render function - renderToDos */}
-        {this.props.tasks && this.props.tasks.length > 0 &&
-        // move out
-          this.props.tasks.map((todo) => {
-            return (todo.task.status && todo.task.status === this.props.title) ? (
-              <Task name={todo.task.name} id={todo.id} />
-            ) : null;
-          })}
+        {this.renderTasks()}
       </div>
     );
   }
@@ -55,4 +60,4 @@ const mapStateToProps = (state) => {
   return { tasks: allTasks };
 };
 
-export default connect(mapStateToProps, {moveTask})(TasksContainer);
+export default connect(mapStateToProps, { moveTask })(TasksContainer);
