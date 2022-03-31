@@ -6,6 +6,7 @@ import { deleteTask, editTask } from "../../redux/actions";
 import Icon from "../../common/components/Icon";
 import EditIcon from "./assets/editIcon.svg";
 import {INITIAL_STATE} from "./constants/task.general";
+import { taskNameValidator } from "../../common/validators/taskNameValidator";
 class Task extends React.Component {
   constructor(props) {
     super(props);
@@ -16,8 +17,13 @@ class Task extends React.Component {
   };
   handleTaskEdit = (e) => {
     this.setState(INITIAL_STATE);
-    // add validations - use validator function
-    this.props.editTask(this.props.id, e.currentTarget.textContent);
+    const tempTask = e.currentTarget.textContent
+    const taskValidator = taskNameValidator(tempTask)    
+    if (taskValidator.isValid) {
+      this.props.editTask(this.props.id, tempTask);
+    } else {
+      this.setState({err: taskValidator.err})
+    }
   };
   handleDeleteTask = () => {
     this.props.deleteTask(this.props.id);
@@ -25,6 +31,11 @@ class Task extends React.Component {
   toggleEditMode = () => {
     this.setState({ isEditMode: !this.state.isEditMode });
   };
+  renderError = () => {
+    if (this.state.err) {
+      return <div>{this.state.err}</div>
+    }
+  }
 
   render() {
     return (
@@ -41,6 +52,7 @@ class Task extends React.Component {
         >
           {this.props.name}
         </div>
+        {this.renderError()}
         <div className={"IconContainer"}>
           <Icon src={EditIcon} alt="edit icon" onClick={this.toggleEditMode} />
           <Icon

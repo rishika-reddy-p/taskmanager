@@ -18,6 +18,7 @@ import {
 import { generateUUID } from "../../common/utils/generateUUID";
 import { TASK_STATUS } from "./constants/createTask.general";
 import { SHOULD_TASK_INPUT_DEBOUNCE } from "./constants/featureFlags";
+import { taskNameValidator } from "../../common/validators/taskNameValidator";
 class CreateTask extends React.Component {
   constructor(props) {
     super(props);
@@ -25,10 +26,11 @@ class CreateTask extends React.Component {
   }
   handleTaskInputChange = (event) => {
     const tempTask = event?.target?.value;
-    if (hasSpecialCharacters(tempTask)) {
-      this.setState({ err: SPECIAL_CHARACTERS_NOT_ALLOWED });
-    } else {
+    const taskValidator = taskNameValidator(tempTask)    
+    if (taskValidator.isValid) {
       this.setState({ task: tempTask, err: "" });
+    } else {
+      this.setState({err: taskValidator.err})
     }
   };
 

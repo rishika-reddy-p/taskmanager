@@ -1,1 +1,1 @@
-export const INITIAL_STATE = { isEditMode: false }
+export const INITIAL_STATE = { isEditMode: false, err: '' }
