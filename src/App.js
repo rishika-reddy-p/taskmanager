@@ -13,11 +13,14 @@ class App extends React.Component {
       theme: themes.light,
     };
 
+    this.updateTheme = (prevState) => {
+      return {
+        theme: prevState.theme === themes.dark ? themes.light : themes.dark,
+      };
+    };
+
     this.toggleTheme = () => {
-      // no inline
-      this.setState((state) => ({
-        theme: state.theme === themes.dark ? themes.light : themes.dark,
-      }));
+      this.setState(this.updateTheme);
     };
   }
 
@@ -27,7 +30,12 @@ class App extends React.Component {
         <div className="App">
           <div className="App-header">
             TASK MANAGER
-            <Button onClick={this.toggleTheme} variant={BUTTON_VARIANTS.SECONDARY}>Change theme</Button>
+            <Button
+              onClick={this.toggleTheme}
+              variant={BUTTON_VARIANTS.SECONDARY}
+            >
+              Change theme
+            </Button>
           </div>
           <CreateTask />
           <div className="AllTasksContainer">

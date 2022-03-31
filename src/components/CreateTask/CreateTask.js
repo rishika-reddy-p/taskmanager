@@ -9,9 +9,7 @@ import {
   TASK_INPUT_LIMIT,
 } from "./constants/createTask.general";
 import { isEmpty as _isEmpty } from "lodash";
-import { hasSpecialCharacters } from "../../common/utils/hasSpecialCharacters";
 import {
-  SPECIAL_CHARACTERS_NOT_ALLOWED,
   TASK_INPUT_LIMIT_EXCEEDED,
   TASK_INPUT_REQUIRED,
 } from "./constants/errorMessages";
